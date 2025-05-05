@@ -1,0 +1,3 @@
+/Users/kelvin_cheung/Documents/Quant_Trading/Crypto_Trading_Strategy_Backtester/build/CMakeFiles/CryptoBacktester.dir
+/Users/kelvin_cheung/Documents/Quant_Trading/Crypto_Trading_Strategy_Backtester/build/CMakeFiles/edit_cache.dir
+/Users/kelvin_cheung/Documents/Quant_Trading/Crypto_Trading_Strategy_Backtester/build/CMakeFiles/rebuild_cache.dir
