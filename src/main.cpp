@@ -1,73 +1,54 @@
-#include <iostream>
-#include <iomanip>
-#include "data/data_loader.h"
-#include "models/asset.h"
-#include "strategies/mean_reversion.h"
 #include "backtester/backtester.h"
+#include "strategies/sma_strategy.h"
+#include "strategies/rsi_strategy.h"
+#include "strategies/bollinger_bands_strategy.h"
+#include <iostream>
+#include <memory>
+#include <string>
+#include <filesystem>
 
-void printResults(const BacktestResult& result) {
-    std::cout << std::fixed << std::setprecision(2);
+int main(int argc, char* argv[]) {
+    std::cout << "===== Cryptocurrency Trading Strategy Backtester =====\n\n";
     
-    std::cout << "\n======== BACKTEST RESULTS ========\n";
-    std::cout << "Strategy: " << result.strategy_name << "\n";
-    std::cout << "Symbol: " << result.symbol << "\n";
-    std::cout << "Initial Capital: $" << result.initial_capital << "\n";
-    std::cout << "Final Capital: $" << result.final_capital << "\n";
-    std::cout << "Total Return: " << result.total_return_pct << "%\n";
-    std::cout << "Sharpe Ratio: " << result.sharpe_ratio << "\n";
-    std::cout << "Max Drawdown: " << result.max_drawdown_pct << "%\n";
-    std::cout << "Total Trades: " << result.total_trades << "\n";
-    std::cout << "Winning Trades: " << result.winning_trades << "\n";
-    std::cout << "Win Rate: " << (result.win_rate * 100.0) << "%\n";
-    std::cout << "Avg Profit Per Trade: " << result.avg_profit_per_trade << "%\n";
-    
-    std::cout << "\n======== TRADE SUMMARY ========\n";
-    for (size_t i = 0; i < std::min(size_t(10), result.trades.size()); i++) {
-        const auto& trade = result.trades[i];
-        std::cout << "Trade " << (i+1) << ": " 
-                  << (trade.is_long ? "Long" : "Short")
-                  << " Entry: $" << trade.entry_price
-                  << " Exit: $" << trade.exit_price
-                  << " Profit: " << trade.profit_pct << "%\n";
+    // Get data path
+    std::string dataPath = "data/btc_historical.csv";
+    if (argc > 1) {
+        dataPath = argv[1];
     }
     
-    if (result.trades.size() > 10) {
-        std::cout << "... and " << (result.trades.size() - 10) << " more trades.\n";
-    }
-}
-
-int main() {
-    std::cout << "Crypto Trading Strategy Backtester\n";
-    std::cout << "==================================\n";
-    
-// Load data
-DataLoader loader;
-std::string dataPath = "../data/btc_sample.csv";
-std::vector<OHLCV> btcData = loader.loadCSV(dataPath);
-    
-    if (btcData.empty()) {
-        std::cerr << "Failed to load data or no data available.\n";
-        std::cerr << "Make sure the file exists and contains valid data.\n";
+    // Check if data file exists
+    if (!std::filesystem::exists(dataPath)) {
+        std::cerr << "Error: Data file not found at " << dataPath << std::endl;
+        std::cerr << "Please download the Bitcoin historical data first using the download_data.py script." << std::endl;
         return 1;
     }
     
-    std::cout << "Loaded " << btcData.size() << " price candles.\n";
-    
-    // Create asset
-    Asset btc("BTC", btcData);
+    // Initialize backtester
+    crypto::backtester::Backtester backtester(dataPath);
     
     // Create strategies
-    MeanReversionStrategy meanRevStrategy(5, 1.5);  // 5-day SMA, 1.5 std dev
+    auto smaStrategy1 = std::make_shared<crypto::strategies::SMAStrategy>(20, 50);
+    auto smaStrategy2 = std::make_shared<crypto::strategies::SMAStrategy>(50, 200);
+    auto rsiStrategy = std::make_shared<crypto::strategies::RSIStrategy>(14, 30, 70);
+    auto bbStrategy = std::make_shared<crypto::strategies::BollingerBandsStrategy>(20, 2.0);
     
-    // Create backtester
-    Backtester backtester(10000.0, 0.5);
+    // Add strategies to backtester
+    backtester.addStrategy(smaStrategy1);
+    backtester.addStrategy(smaStrategy2);
+    backtester.addStrategy(rsiStrategy);
+    backtester.addStrategy(bbStrategy);
     
     // Run backtest
-    std::cout << "Running backtest...\n";
-    BacktestResult result = backtester.runBacktest(btc, meanRevStrategy);
+    backtester.run(10000.0, 0.95);  // Initial capital of $10,000, invest 95% of capital per trade
     
-    // Print results
-    printResults(result);
+    // Compare strategies
+    backtester.compareStrategies();
+    
+    // Export results for visualization
+    backtester.exportResults(".");
+    
+    std::cout << "\nBacktest complete. Results have been exported.\n";
+    std::cout << "To visualize the results, run the visualize_results.py script.\n";
     
     return 0;
 }

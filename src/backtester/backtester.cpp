@@ -1,180 +1,135 @@
-#include "backtester.h"
-#include <cmath>
+#include "backtester/backtester.h"
+#include <iostream>
+#include <iomanip>
+#include <fstream>
 #include <algorithm>
-#include <numeric>
 
-Backtester::Backtester(double capital, double position_size) 
-    : initial_capital(capital), current_capital(capital), position_size_pct(position_size) {}
+namespace crypto {
+namespace backtester {
 
-BacktestResult Backtester::runBacktest(const Asset& asset, Strategy& strategy) {
-    std::vector<Signal> signals = strategy.generateSignals(asset);
-    auto prices = asset.getClosePrices();
-    
-    // Reset state
-    current_capital = initial_capital;
-    equity_curve.clear();
-    equity_curve.push_back(current_capital);
-    trades.clear();
-    
-    bool in_position = false;
-    bool is_long_position = false;
-    double position_size = 0.0;
-    double entry_price = 0.0;
-    size_t entry_index = 0;
-    
-    for (size_t i = 1; i < signals.size(); ++i) {
-        Signal current_signal = signals[i];
-        
-        // Handle position exit
-        if (in_position) {
-            if ((is_long_position && current_signal == SELL) || 
-                (!is_long_position && current_signal == BUY)) {
-                
-                double exit_price = prices[i];
-                double profit = 0.0;
-                
-                if (is_long_position) {
-                    profit = position_size * (exit_price / entry_price - 1.0);
-                } else {
-                    profit = position_size * (entry_price / exit_price - 1.0);
-                }
-                
-                current_capital += profit;
-                
-                Trade trade;
-                trade.entry_index = entry_index;
-                trade.exit_index = i;
-                trade.entry_price = entry_price;
-                trade.exit_price = exit_price;
-                trade.profit_pct = 100.0 * profit / position_size;
-                trade.is_long = is_long_position;
-                
-                recordTrade(trade);
-                
-                in_position = false;
-            }
-        }
-        
-        // Handle position entry
-        if (!in_position) {
-            if (current_signal == BUY) {
-                entry_price = prices[i];
-                position_size = current_capital * position_size_pct;
-                entry_index = i;
-                in_position = true;
-                is_long_position = true;
-            } else if (current_signal == SELL) {
-                entry_price = prices[i];
-                position_size = current_capital * position_size_pct;
-                entry_index = i;
-                in_position = true;
-                is_long_position = false;
-            }
-        }
-        
-        equity_curve.push_back(current_capital);
+Backtester::Backtester(const std::string& dataPath) : m_dataLoader(dataPath) {
+    if (!m_dataLoader.loadData()) {
+        std::cerr << "Failed to load data from " << dataPath << ". Exiting..." << std::endl;
+        exit(1);
     }
-    
-    // Close any open position at the end of the backtest
-    if (in_position) {
-        double exit_price = prices.back();
-        double profit = 0.0;
-        
-        if (is_long_position) {
-            profit = position_size * (exit_price / entry_price - 1.0);
-        } else {
-            profit = position_size * (entry_price / exit_price - 1.0);
-        }
-        
-        current_capital += profit;
-        
-        Trade trade;
-        trade.entry_index = entry_index;
-        trade.exit_index = prices.size() - 1;
-        trade.entry_price = entry_price;
-        trade.exit_price = exit_price;
-        trade.profit_pct = 100.0 * profit / position_size;
-        trade.is_long = is_long_position;
-        
-        recordTrade(trade);
-        
-        equity_curve.back() = current_capital;
-    }
-    
-    // Calculate performance metrics
-    BacktestResult result;
-    result.strategy_name = strategy.getName();
-    result.symbol = asset.getSymbol();
-    result.initial_capital = initial_capital;
-    result.final_capital = current_capital;
-    result.total_return_pct = 100.0 * (current_capital / initial_capital - 1.0);
-    
-    // Calculate daily returns from equity curve
-    std::vector<double> daily_returns;
-    for (size_t i = 1; i < equity_curve.size(); i++) {
-        daily_returns.push_back(equity_curve[i] / equity_curve[i-1] - 1.0);
-    }
-    
-    result.sharpe_ratio = calculateSharpeRatio(daily_returns);
-    result.max_drawdown_pct = calculateMaxDrawdown(equity_curve);
-    result.total_trades = trades.size();
-    
-    // Count winning trades
-    result.winning_trades = std::count_if(trades.begin(), trades.end(), 
-        [](const Trade& t) { return t.profit_pct > 0.0; });
-    
-    result.win_rate = static_cast<double>(result.winning_trades) / result.total_trades;
-    
-    // Calculate average profit per trade
-    double total_profit = std::accumulate(trades.begin(), trades.end(), 0.0,
-        [](double sum, const Trade& t) { return sum + t.profit_pct; });
-    
-    result.avg_profit_per_trade = total_profit / result.total_trades;
-    result.equity_curve = equity_curve;
-    result.trades = trades;
-    
-    return result;
 }
 
-double Backtester::calculateSharpeRatio(const std::vector<double>& returns, double risk_free_rate) const {
-    if (returns.empty()) {
-        return 0.0;
-    }
-    
-    double sum = std::accumulate(returns.begin(), returns.end(), 0.0);
-    double mean = sum / returns.size();
-    
-    double sq_sum = std::inner_product(returns.begin(), returns.end(), returns.begin(), 0.0,
-                                     std::plus<>(),
-                                     [mean](double a, double b) {
-                                         return (a - mean) * (b - mean);
-                                     });
-    
-    double std_dev = std::sqrt(sq_sum / returns.size());
-    
-    // Annualize (assuming daily returns)
-    double annualized_return = (mean - risk_free_rate) * 252.0;
-    double annualized_volatility = std_dev * std::sqrt(252.0);
-    
-    return annualized_volatility == 0.0 ? 0.0 : annualized_return / annualized_volatility;
+void Backtester::addStrategy(std::shared_ptr<strategies::Strategy> strategy) {
+    m_strategies.push_back(strategy);
+    std::cout << "Added strategy: " << strategy->getName() << std::endl;
 }
 
-double Backtester::calculateMaxDrawdown(const std::vector<double>& equity) const {
-    double max_drawdown = 0.0;
-    double peak = equity[0];
+void Backtester::run(double initialCapital, double positionSize) {
+    std::cout << "\nPreparing indicators for backtesting..." << std::endl;
     
-    for (double value : equity) {
-        if (value > peak) {
-            peak = value;
-        } else {
-            double drawdown = (peak - value) / peak;
-            max_drawdown = std::max(max_drawdown, drawdown);
+    // Calculate all indicators that might be needed by strategies
+    m_dataLoader.addSMA(20);
+    m_dataLoader.addSMA(50);
+    m_dataLoader.addSMA(200);
+    m_dataLoader.addEMA(12);
+    m_dataLoader.addEMA(26);
+    m_dataLoader.addRSI(14);
+    m_dataLoader.addBollingerBands(20, 2.0);
+    
+    std::cout << "\nRunning backtests with initial capital: $" << initialCapital 
+              << ", position size: " << (positionSize * 100) << "%" << std::endl;
+    
+    // Run backtest for each strategy
+    for (auto& strategy : m_strategies) {
+        strategy->backtest(m_dataLoader, initialCapital, positionSize);
+    }
+}
+
+void Backtester::compareStrategies() const {
+    if (m_strategies.empty()) {
+        std::cerr << "No strategies to compare." << std::endl;
+        return;
+    }
+    
+    std::cout << "\n============= Strategy Comparison =============\n";
+    
+    // Header
+    std::cout << std::left << std::setw(30) << "Strategy" 
+              << std::right << std::setw(15) << "Total Return" 
+              << std::setw(15) << "Annual Return" 
+              << std::setw(15) << "Sharpe Ratio" 
+              << std::setw(15) << "Max Drawdown" 
+              << std::setw(15) << "Win Rate" 
+              << std::setw(15) << "Total Trades" << std::endl;
+    
+    std::cout << std::string(105, '-') << std::endl;
+    
+    // Data
+    for (const auto& strategy : m_strategies) {
+        std::cout << std::left << std::setw(30) << strategy->getName() 
+                  << std::right << std::setw(15) << std::fixed << std::setprecision(2) << strategy->getTotalReturn() << "%" 
+                  << std::setw(15) << strategy->getAnnualReturn() << "%" 
+                  << std::setw(15) << std::setprecision(2) << strategy->getSharpeRatio() 
+                  << std::setw(15) << std::setprecision(2) << strategy->getMaxDrawdown() << "%" 
+                  << std::setw(15) << std::setprecision(2) << strategy->getWinRate() << "%" 
+                  << std::setw(15) << strategy->getTotalTrades() << std::endl;
+    }
+}
+
+void Backtester::exportResults(const std::string& outputDir) const {
+    // Create strategy comparison CSV
+    std::string comparisonFile = outputDir + "/strategy_comparison.csv";
+    std::ofstream outfile(comparisonFile);
+    
+    if (!outfile.is_open()) {
+        std::cerr << "Failed to open file for writing: " << comparisonFile << std::endl;
+        return;
+    }
+    
+    // Write header
+    outfile << "Strategy,Total Return,Annual Return,Sharpe Ratio,Max Drawdown,Win Rate,Total Trades\n";
+    
+    // Write data for each strategy
+    for (const auto& strategy : m_strategies) {
+        outfile << strategy->getName() << "," 
+                << strategy->getTotalReturn() << "," 
+                << strategy->getAnnualReturn() << "," 
+                << strategy->getSharpeRatio() << "," 
+                << strategy->getMaxDrawdown() << "," 
+                << strategy->getWinRate() << "," 
+                << strategy->getTotalTrades() << "\n";
+    }
+    
+    outfile.close();
+    std::cout << "Strategy comparison exported to " << comparisonFile << std::endl;
+    
+    // Export individual strategy results
+    const auto& priceData = m_dataLoader.getData();
+    
+    for (const auto& strategy : m_strategies) {
+        // Create filename (replace spaces with underscores)
+        std::string strategyName = strategy->getName();
+        std::replace(strategyName.begin(), strategyName.end(), ' ', '_');
+        std::string filename = outputDir + "/" + strategyName + ".csv";
+        
+        std::ofstream stratFile(filename);
+        
+        if (!stratFile.is_open()) {
+            std::cerr << "Failed to open file for writing: " << filename << std::endl;
+            continue;
         }
+        
+        // Header
+        stratFile << "Date,Close,Equity\n";
+        
+        const auto& equityCurve = strategy->getEquityCurve();
+        
+        // Data
+        for (size_t i = 0; i < equityCurve.size(); ++i) {
+            stratFile << priceData[i].date << "," 
+                    << priceData[i].close << "," 
+                    << equityCurve[i] << "\n";
+        }
+        
+        stratFile.close();
+        std::cout << "Results for " << strategy->getName() << " exported to " << filename << std::endl;
     }
-    
-    return 100.0 * max_drawdown;
 }
 
-void Backtester::recordTrade(const Trade& trade) {
-    trades.push_back(trade);
-}
+} // namespace backtester
+} // namespace crypto

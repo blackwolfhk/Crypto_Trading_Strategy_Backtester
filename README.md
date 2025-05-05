@@ -32,10 +32,6 @@ cmake --version
 ## Building the Project
 
 ```
-# Clone the repository
-git clone https://github.com/yourusername/crypto-backtester.git
-cd crypto-backtester
-
 # Create build directory
 mkdir build
 cd build
@@ -48,3 +44,7 @@ cmake --build .
 # From the build directory
 
 ./CryptoBacktester
+
+### download btc data
+
+curl -o data/btc_historical.csv "https://www.cryptodatadownload.com/cdd/Bitstamp_BTCUSD_d.csv"
