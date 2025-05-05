@@ -63,11 +63,11 @@ CMAKE_BINARY_DIR = /Users/kelvin_cheung/Documents/Quant_Trading/Crypto_Trading_S
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/CryptoBacktester.dir/all
+all: CMakeFiles/backtester.dir/all
 .PHONY : all
 
 # The main recursive "codegen" target.
-codegen: CMakeFiles/CryptoBacktester.dir/codegen
+codegen: CMakeFiles/backtester.dir/codegen
 .PHONY : codegen
 
 # The main recursive "preinstall" target.
@@ -75,40 +75,40 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/CryptoBacktester.dir/clean
+clean: CMakeFiles/backtester.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/CryptoBacktester.dir
+# Target rules for target CMakeFiles/backtester.dir
 
 # All Build rule for target.
-CMakeFiles/CryptoBacktester.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CryptoBacktester.dir/build.make CMakeFiles/CryptoBacktester.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CryptoBacktester.dir/build.make CMakeFiles/CryptoBacktester.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/kelvin_cheung/Documents/Quant_Trading/Crypto_Trading_Strategy_Backtester/build/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target CryptoBacktester"
-.PHONY : CMakeFiles/CryptoBacktester.dir/all
+CMakeFiles/backtester.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/kelvin_cheung/Documents/Quant_Trading/Crypto_Trading_Strategy_Backtester/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10 "Built target backtester"
+.PHONY : CMakeFiles/backtester.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/CryptoBacktester.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/kelvin_cheung/Documents/Quant_Trading/Crypto_Trading_Strategy_Backtester/build/CMakeFiles 6
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/CryptoBacktester.dir/all
+CMakeFiles/backtester.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/kelvin_cheung/Documents/Quant_Trading/Crypto_Trading_Strategy_Backtester/build/CMakeFiles 10
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/backtester.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/kelvin_cheung/Documents/Quant_Trading/Crypto_Trading_Strategy_Backtester/build/CMakeFiles 0
-.PHONY : CMakeFiles/CryptoBacktester.dir/rule
+.PHONY : CMakeFiles/backtester.dir/rule
 
 # Convenience name for target.
-CryptoBacktester: CMakeFiles/CryptoBacktester.dir/rule
-.PHONY : CryptoBacktester
+backtester: CMakeFiles/backtester.dir/rule
+.PHONY : backtester
 
 # codegen rule for target.
-CMakeFiles/CryptoBacktester.dir/codegen:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CryptoBacktester.dir/build.make CMakeFiles/CryptoBacktester.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/kelvin_cheung/Documents/Quant_Trading/Crypto_Trading_Strategy_Backtester/build/CMakeFiles --progress-num=1,2,3,4,5,6 "Finished codegen for target CryptoBacktester"
-.PHONY : CMakeFiles/CryptoBacktester.dir/codegen
+CMakeFiles/backtester.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/kelvin_cheung/Documents/Quant_Trading/Crypto_Trading_Strategy_Backtester/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10 "Finished codegen for target backtester"
+.PHONY : CMakeFiles/backtester.dir/codegen
 
 # clean rule for target.
-CMakeFiles/CryptoBacktester.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CryptoBacktester.dir/build.make CMakeFiles/CryptoBacktester.dir/clean
-.PHONY : CMakeFiles/CryptoBacktester.dir/clean
+CMakeFiles/backtester.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/clean
+.PHONY : CMakeFiles/backtester.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

@@ -146,22 +146,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=CryptoBacktester
-
-//Value Computed by CMake
-CMAKE_PROJECT_VERSION:STATIC=1.0
-
-//Value Computed by CMake
-CMAKE_PROJECT_VERSION_MAJOR:STATIC=1
-
-//Value Computed by CMake
-CMAKE_PROJECT_VERSION_MINOR:STATIC=0
-
-//Value Computed by CMake
-CMAKE_PROJECT_VERSION_PATCH:STATIC=
-
-//Value Computed by CMake
-CMAKE_PROJECT_VERSION_TWEAK:STATIC=
+CMAKE_PROJECT_NAME:STATIC=CryptoTradingStrategyBacktester
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
@@ -229,13 +214,13 @@ CMAKE_TAPI:FILEPATH=/opt/anaconda3/bin/tapi
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
 //Value Computed by CMake
-CryptoBacktester_BINARY_DIR:STATIC=/Users/kelvin_cheung/Documents/Quant_Trading/Crypto_Trading_Strategy_Backtester/build
+CryptoTradingStrategyBacktester_BINARY_DIR:STATIC=/Users/kelvin_cheung/Documents/Quant_Trading/Crypto_Trading_Strategy_Backtester/build
 
 //Value Computed by CMake
-CryptoBacktester_IS_TOP_LEVEL:STATIC=ON
+CryptoTradingStrategyBacktester_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
-CryptoBacktester_SOURCE_DIR:STATIC=/Users/kelvin_cheung/Documents/Quant_Trading/Crypto_Trading_Strategy_Backtester
+CryptoTradingStrategyBacktester_SOURCE_DIR:STATIC=/Users/kelvin_cheung/Documents/Quant_Trading/Crypto_Trading_Strategy_Backtester
 
 
 ########################

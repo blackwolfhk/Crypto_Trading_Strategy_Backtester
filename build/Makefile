@@ -117,24 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named CryptoBacktester
+# Target rules for targets named backtester
 
 # Build rule for target.
-CryptoBacktester: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CryptoBacktester
-.PHONY : CryptoBacktester
+backtester: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 backtester
+.PHONY : backtester
 
 # fast build rule for target.
-CryptoBacktester/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CryptoBacktester.dir/build.make CMakeFiles/CryptoBacktester.dir/build
-.PHONY : CryptoBacktester/fast
+backtester/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/build
+.PHONY : backtester/fast
 
 src/backtester/backtester.o: src/backtester/backtester.cpp.o
 .PHONY : src/backtester/backtester.o
 
 # target to build an object file
 src/backtester/backtester.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CryptoBacktester.dir/build.make CMakeFiles/CryptoBacktester.dir/src/backtester/backtester.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/backtester/backtester.cpp.o
 .PHONY : src/backtester/backtester.cpp.o
 
 src/backtester/backtester.i: src/backtester/backtester.cpp.i
@@ -142,7 +142,7 @@ src/backtester/backtester.i: src/backtester/backtester.cpp.i
 
 # target to preprocess a source file
 src/backtester/backtester.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CryptoBacktester.dir/build.make CMakeFiles/CryptoBacktester.dir/src/backtester/backtester.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/backtester/backtester.cpp.i
 .PHONY : src/backtester/backtester.cpp.i
 
 src/backtester/backtester.s: src/backtester/backtester.cpp.s
@@ -150,15 +150,39 @@ src/backtester/backtester.s: src/backtester/backtester.cpp.s
 
 # target to generate assembly for a file
 src/backtester/backtester.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CryptoBacktester.dir/build.make CMakeFiles/CryptoBacktester.dir/src/backtester/backtester.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/backtester/backtester.cpp.s
 .PHONY : src/backtester/backtester.cpp.s
+
+src/backtester/performance_metrics.o: src/backtester/performance_metrics.cpp.o
+.PHONY : src/backtester/performance_metrics.o
+
+# target to build an object file
+src/backtester/performance_metrics.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/backtester/performance_metrics.cpp.o
+.PHONY : src/backtester/performance_metrics.cpp.o
+
+src/backtester/performance_metrics.i: src/backtester/performance_metrics.cpp.i
+.PHONY : src/backtester/performance_metrics.i
+
+# target to preprocess a source file
+src/backtester/performance_metrics.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/backtester/performance_metrics.cpp.i
+.PHONY : src/backtester/performance_metrics.cpp.i
+
+src/backtester/performance_metrics.s: src/backtester/performance_metrics.cpp.s
+.PHONY : src/backtester/performance_metrics.s
+
+# target to generate assembly for a file
+src/backtester/performance_metrics.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/backtester/performance_metrics.cpp.s
+.PHONY : src/backtester/performance_metrics.cpp.s
 
 src/data/data_loader.o: src/data/data_loader.cpp.o
 .PHONY : src/data/data_loader.o
 
 # target to build an object file
 src/data/data_loader.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CryptoBacktester.dir/build.make CMakeFiles/CryptoBacktester.dir/src/data/data_loader.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/data/data_loader.cpp.o
 .PHONY : src/data/data_loader.cpp.o
 
 src/data/data_loader.i: src/data/data_loader.cpp.i
@@ -166,7 +190,7 @@ src/data/data_loader.i: src/data/data_loader.cpp.i
 
 # target to preprocess a source file
 src/data/data_loader.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CryptoBacktester.dir/build.make CMakeFiles/CryptoBacktester.dir/src/data/data_loader.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/data/data_loader.cpp.i
 .PHONY : src/data/data_loader.cpp.i
 
 src/data/data_loader.s: src/data/data_loader.cpp.s
@@ -174,7 +198,7 @@ src/data/data_loader.s: src/data/data_loader.cpp.s
 
 # target to generate assembly for a file
 src/data/data_loader.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CryptoBacktester.dir/build.make CMakeFiles/CryptoBacktester.dir/src/data/data_loader.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/data/data_loader.cpp.s
 .PHONY : src/data/data_loader.cpp.s
 
 src/main.o: src/main.cpp.o
@@ -182,7 +206,7 @@ src/main.o: src/main.cpp.o
 
 # target to build an object file
 src/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CryptoBacktester.dir/build.make CMakeFiles/CryptoBacktester.dir/src/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/main.cpp.o
 .PHONY : src/main.cpp.o
 
 src/main.i: src/main.cpp.i
@@ -190,7 +214,7 @@ src/main.i: src/main.cpp.i
 
 # target to preprocess a source file
 src/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CryptoBacktester.dir/build.make CMakeFiles/CryptoBacktester.dir/src/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/main.cpp.i
 .PHONY : src/main.cpp.i
 
 src/main.s: src/main.cpp.s
@@ -198,56 +222,128 @@ src/main.s: src/main.cpp.s
 
 # target to generate assembly for a file
 src/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CryptoBacktester.dir/build.make CMakeFiles/CryptoBacktester.dir/src/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
-src/models/asset.o: src/models/asset.cpp.o
-.PHONY : src/models/asset.o
+src/strategies/bollinger_bands_strategy.o: src/strategies/bollinger_bands_strategy.cpp.o
+.PHONY : src/strategies/bollinger_bands_strategy.o
 
 # target to build an object file
-src/models/asset.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CryptoBacktester.dir/build.make CMakeFiles/CryptoBacktester.dir/src/models/asset.cpp.o
-.PHONY : src/models/asset.cpp.o
+src/strategies/bollinger_bands_strategy.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/strategies/bollinger_bands_strategy.cpp.o
+.PHONY : src/strategies/bollinger_bands_strategy.cpp.o
 
-src/models/asset.i: src/models/asset.cpp.i
-.PHONY : src/models/asset.i
+src/strategies/bollinger_bands_strategy.i: src/strategies/bollinger_bands_strategy.cpp.i
+.PHONY : src/strategies/bollinger_bands_strategy.i
 
 # target to preprocess a source file
-src/models/asset.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CryptoBacktester.dir/build.make CMakeFiles/CryptoBacktester.dir/src/models/asset.cpp.i
-.PHONY : src/models/asset.cpp.i
+src/strategies/bollinger_bands_strategy.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/strategies/bollinger_bands_strategy.cpp.i
+.PHONY : src/strategies/bollinger_bands_strategy.cpp.i
 
-src/models/asset.s: src/models/asset.cpp.s
-.PHONY : src/models/asset.s
+src/strategies/bollinger_bands_strategy.s: src/strategies/bollinger_bands_strategy.cpp.s
+.PHONY : src/strategies/bollinger_bands_strategy.s
 
 # target to generate assembly for a file
-src/models/asset.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CryptoBacktester.dir/build.make CMakeFiles/CryptoBacktester.dir/src/models/asset.cpp.s
-.PHONY : src/models/asset.cpp.s
+src/strategies/bollinger_bands_strategy.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/strategies/bollinger_bands_strategy.cpp.s
+.PHONY : src/strategies/bollinger_bands_strategy.cpp.s
 
-src/strategies/mean_reversion.o: src/strategies/mean_reversion.cpp.o
-.PHONY : src/strategies/mean_reversion.o
+src/strategies/rsi_strategy.o: src/strategies/rsi_strategy.cpp.o
+.PHONY : src/strategies/rsi_strategy.o
 
 # target to build an object file
-src/strategies/mean_reversion.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CryptoBacktester.dir/build.make CMakeFiles/CryptoBacktester.dir/src/strategies/mean_reversion.cpp.o
-.PHONY : src/strategies/mean_reversion.cpp.o
+src/strategies/rsi_strategy.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/strategies/rsi_strategy.cpp.o
+.PHONY : src/strategies/rsi_strategy.cpp.o
 
-src/strategies/mean_reversion.i: src/strategies/mean_reversion.cpp.i
-.PHONY : src/strategies/mean_reversion.i
+src/strategies/rsi_strategy.i: src/strategies/rsi_strategy.cpp.i
+.PHONY : src/strategies/rsi_strategy.i
 
 # target to preprocess a source file
-src/strategies/mean_reversion.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CryptoBacktester.dir/build.make CMakeFiles/CryptoBacktester.dir/src/strategies/mean_reversion.cpp.i
-.PHONY : src/strategies/mean_reversion.cpp.i
+src/strategies/rsi_strategy.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/strategies/rsi_strategy.cpp.i
+.PHONY : src/strategies/rsi_strategy.cpp.i
 
-src/strategies/mean_reversion.s: src/strategies/mean_reversion.cpp.s
-.PHONY : src/strategies/mean_reversion.s
+src/strategies/rsi_strategy.s: src/strategies/rsi_strategy.cpp.s
+.PHONY : src/strategies/rsi_strategy.s
 
 # target to generate assembly for a file
-src/strategies/mean_reversion.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CryptoBacktester.dir/build.make CMakeFiles/CryptoBacktester.dir/src/strategies/mean_reversion.cpp.s
-.PHONY : src/strategies/mean_reversion.cpp.s
+src/strategies/rsi_strategy.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/strategies/rsi_strategy.cpp.s
+.PHONY : src/strategies/rsi_strategy.cpp.s
+
+src/strategies/sma_strategy.o: src/strategies/sma_strategy.cpp.o
+.PHONY : src/strategies/sma_strategy.o
+
+# target to build an object file
+src/strategies/sma_strategy.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/strategies/sma_strategy.cpp.o
+.PHONY : src/strategies/sma_strategy.cpp.o
+
+src/strategies/sma_strategy.i: src/strategies/sma_strategy.cpp.i
+.PHONY : src/strategies/sma_strategy.i
+
+# target to preprocess a source file
+src/strategies/sma_strategy.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/strategies/sma_strategy.cpp.i
+.PHONY : src/strategies/sma_strategy.cpp.i
+
+src/strategies/sma_strategy.s: src/strategies/sma_strategy.cpp.s
+.PHONY : src/strategies/sma_strategy.s
+
+# target to generate assembly for a file
+src/strategies/sma_strategy.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/strategies/sma_strategy.cpp.s
+.PHONY : src/strategies/sma_strategy.cpp.s
+
+src/strategies/strategy.o: src/strategies/strategy.cpp.o
+.PHONY : src/strategies/strategy.o
+
+# target to build an object file
+src/strategies/strategy.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/strategies/strategy.cpp.o
+.PHONY : src/strategies/strategy.cpp.o
+
+src/strategies/strategy.i: src/strategies/strategy.cpp.i
+.PHONY : src/strategies/strategy.i
+
+# target to preprocess a source file
+src/strategies/strategy.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/strategies/strategy.cpp.i
+.PHONY : src/strategies/strategy.cpp.i
+
+src/strategies/strategy.s: src/strategies/strategy.cpp.s
+.PHONY : src/strategies/strategy.s
+
+# target to generate assembly for a file
+src/strategies/strategy.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/strategies/strategy.cpp.s
+.PHONY : src/strategies/strategy.cpp.s
+
+src/utils/csv_utils.o: src/utils/csv_utils.cpp.o
+.PHONY : src/utils/csv_utils.o
+
+# target to build an object file
+src/utils/csv_utils.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/utils/csv_utils.cpp.o
+.PHONY : src/utils/csv_utils.cpp.o
+
+src/utils/csv_utils.i: src/utils/csv_utils.cpp.i
+.PHONY : src/utils/csv_utils.i
+
+# target to preprocess a source file
+src/utils/csv_utils.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/utils/csv_utils.cpp.i
+.PHONY : src/utils/csv_utils.cpp.i
+
+src/utils/csv_utils.s: src/utils/csv_utils.cpp.s
+.PHONY : src/utils/csv_utils.s
+
+# target to generate assembly for a file
+src/utils/csv_utils.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/backtester.dir/build.make CMakeFiles/backtester.dir/src/utils/csv_utils.cpp.s
+.PHONY : src/utils/csv_utils.cpp.s
 
 # Help Target
 help:
@@ -257,22 +353,34 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... CryptoBacktester"
+	@echo "... backtester"
 	@echo "... src/backtester/backtester.o"
 	@echo "... src/backtester/backtester.i"
 	@echo "... src/backtester/backtester.s"
+	@echo "... src/backtester/performance_metrics.o"
+	@echo "... src/backtester/performance_metrics.i"
+	@echo "... src/backtester/performance_metrics.s"
 	@echo "... src/data/data_loader.o"
 	@echo "... src/data/data_loader.i"
 	@echo "... src/data/data_loader.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
-	@echo "... src/models/asset.o"
-	@echo "... src/models/asset.i"
-	@echo "... src/models/asset.s"
-	@echo "... src/strategies/mean_reversion.o"
-	@echo "... src/strategies/mean_reversion.i"
-	@echo "... src/strategies/mean_reversion.s"
+	@echo "... src/strategies/bollinger_bands_strategy.o"
+	@echo "... src/strategies/bollinger_bands_strategy.i"
+	@echo "... src/strategies/bollinger_bands_strategy.s"
+	@echo "... src/strategies/rsi_strategy.o"
+	@echo "... src/strategies/rsi_strategy.i"
+	@echo "... src/strategies/rsi_strategy.s"
+	@echo "... src/strategies/sma_strategy.o"
+	@echo "... src/strategies/sma_strategy.i"
+	@echo "... src/strategies/sma_strategy.s"
+	@echo "... src/strategies/strategy.o"
+	@echo "... src/strategies/strategy.i"
+	@echo "... src/strategies/strategy.s"
+	@echo "... src/utils/csv_utils.o"
+	@echo "... src/utils/csv_utils.i"
+	@echo "... src/utils/csv_utils.s"
 .PHONY : help
 
 
