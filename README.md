@@ -2,7 +2,7 @@
 
 A C++ application for backtesting quantitative trading strategies on cryptocurrency data. This project uses a modular, organized structure following best practices for C++ project organization.
 
-## Features
+Features
 
 - Data handling for historical cryptocurrency prices
 - Implementation of mean reversion strategy using Bollinger Bands
@@ -10,9 +10,17 @@ A C++ application for backtesting quantitative trading strategies on cryptocurre
 - Trade tracking and performance visualization
 - Modular design for easy extension with new strategies
 
-## Requirements
+## Project Overview
 
-### Install CMake
+This backtester allows you to test trading strategies against historical Bitcoin price data. The repository includes data from Bitstamp's BTC/USD daily prices from 2016 to 2025, enabling comprehensive strategy evaluation across different market conditions.
+
+Requirements
+C++17 compatible compiler
+CMake 3.10 or higher
+Setting Up CMake
+bash
+
+### Install CMake (on macOS with Homebrew)
 
 brew install cmake
 
@@ -20,31 +28,49 @@ brew install cmake
 
 export PATH="/Applications/CMake.app/Contents/bin:$PATH"
 
-### reload your shell config
+### Reload your shell config
 
 source ~/.zshrc
 
+### Verify installation
+
 cmake --version
 
-- C++17 compatible compiler
-- CMake 3.10 or higher
+# Building and Running the Project
 
-## Building the Project
+## Clone the repository
 
-```
-# Create build directory
-mkdir build
+git clone https://github.com/blackwolfhk/Crypto_Trading_Strategy_Backtester
+
+cd Crypto_Trading_Strategy_Backtester
+
+### Create build directory
+
+mkdir -p build
 cd build
 
-# Configure and build
+### Configure and build
+
 cmake ..
 cmake --build .
-```
 
-# From the build directory
+### Make sure data directory exists
 
-./CryptoBacktester
+mkdir -p data
 
-### download btc data
+### Copy the Bitcoin data file (if needed)
+
+cp ../data/btc_historical.csv ./data/
+
+### Run the backtester
+
+./backtester
+
+### Data Source
+
+Historical Bitcoin price data is sourced from Bitstamp via CryptoDataDownload.
+The data includes daily OHLCV (Open, High, Low, Close, Volume) information.
+
+### Alternative way to download the latest Bitcoin historical data
 
 curl -o data/btc_historical.csv "https://www.cryptodatadownload.com/cdd/Bitstamp_BTCUSD_d.csv"

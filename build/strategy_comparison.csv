@@ -1,5 +1,5 @@
 Strategy,Total Return,Annual Return,Sharpe Ratio,Max Drawdown,Win Rate,Total Trades
-SMA Crossover 20/50,-100,-100,2.17905,100,12,125
-SMA Crossover 50/200,-100,-100,2.47231,100,10.5263,57
+SMA Crossover 20/50,-100,-100,1.86704,100,14.1791,134
+SMA Crossover 50/200,-100,-79.8797,1.81903,100,13.5135,37
 RSI 14 (30/70),0,0,0,0,0,0
-Bollinger Bands 20 (2.000000),1229.13,63.7393,3.29991,89.2046,100,2
+Bollinger Bands 20 (2.000000),592268,79.7696,0.760422,77.3056,100,11
